@@ -316,13 +316,13 @@ registerButton.addEventListener('click', () => {
   } else if (!checkActivities ()) {
 	alert('At least one activity must be selected.');
 	return false;
-  } else if (!checkCreditCardNumber ()) {
+  } else if (isCreditCardSelected() && !checkCreditCardNumber ()) {
 	alert('Invalid credit card number.');
 	return false;
-  } else if (!checkCreditCardZip ()) {
+  } else if (isCreditCardSelected() && !checkCreditCardZip ()) {
 	alert('Invalid Zip Code.');
 	return false;
-  } else if (!checkCreditCardCVV ()) {
+  } else if (isCreditCardSelected() && !checkCreditCardCVV ()) {
 	alert('Invalid CVV.');
 	return false;
   } else {
