@@ -9,6 +9,7 @@ let fieldSet = jobRole.parentNode;
 //display only matching tshirt colors for selected design
 const tshirtDesign = document.getElementById('design');
 const tshirtColor = document.getElementById('color');
+let shirt0 = document.createElement('option');
 
 //set up checkbox behavior
 const allCheckboxes = document.querySelector('.activities')
@@ -36,6 +37,10 @@ let emailField = document.getElementById('mail');
 let creditCardNumberField = document.getElementById('cc-num');
 let creditCardZipField = document.getElementById('zip');
 let creditCardCVVField = document.getElementById('cvv');
+
+//setup variables to remove line break and text area if js runs
+let originalLineBreak = document.getElementsByTagName('br')[0];
+let originalTextArea = document.getElementsByTagName('textarea')[0];
 
 //declare functions
 function setFocusToName(){
@@ -123,6 +128,10 @@ let cvvLength = creditCardCVVField.value.length;
   }
 }	
 
+//remove the line break and other text area from html
+fieldSet.removeChild(fieldSet.lastChild);
+fieldSet.removeChild(fieldSet.lastChild);
+
 //grab the name element and set focus to it
 
 setFocusToName();
@@ -144,6 +153,12 @@ let br = document.createElement('br');
 	fieldExists = false;
   }
 });
+
+//remove initial color options until the user chooses a theme
+tshirtColor.innerHTML = '';
+shirt0.value = 'cornflowerblue';
+shirt0.textContent = 'Please select a T-shirt theme';
+tshirtColor.appendChild(shirt0);
 
 tshirtDesign.addEventListener('change', function() {
 let shirt1 = document.createElement('option');
@@ -176,25 +191,10 @@ let shirt6 = document.createElement('option');
 	  tshirtColor.appendChild(shirt5);
 	  tshirtColor.appendChild(shirt6);
   } else {
-	  tshirtColor.innerHTML = '';
-	  shirt1.value = 'cornflowerblue';
-	  shirt1.textContent = 'Cornflower Blue (JS Puns shirt only)';
-	  shirt2.value = 'darkslategrey';
-	  shirt2.textContent = 'Dark Slate Grey (JS Puns shirt only)';
-	  shirt3.value = 'gold';
-	  shirt3.textContent = 'Gold (JS Puns shirt only)';
-	  shirt4.value = 'tomato';
-	  shirt4.textContent = 'Tomato (I ♥ JS shirt only)';
-	  shirt5.value = 'steelblue';
-	  shirt5.textContent = "Steel Blue (I ♥ JS shirt only)";
-	  shirt6.value = 'dimgrey';
-	  shirt6.textContent = "Dim Grey (I ♥ JS shirt only)";
-	  tshirtColor.appendChild(shirt1);
-	  tshirtColor.appendChild(shirt2);
-	  tshirtColor.appendChild(shirt3);
-	  tshirtColor.appendChild(shirt4);
-	  tshirtColor.appendChild(shirt5);
-	  tshirtColor.appendChild(shirt6);
+      tshirtColor.innerHTML = '';
+      shirt0.value = 'cornflowerblue';
+      shirt0.textContent = 'Please select a T-shirt theme';
+      tshirtColor.appendChild(shirt0);
   }
 });
 
@@ -298,24 +298,23 @@ paymentSection.addEventListener('change', function() {
 registerButton.addEventListener('click', () => {
   if (!validateName ()) {
 	alert('Invalid Name.');
-	return false;
+	event.preventDefault();
   } else if (!validateEmail ()) {
 	alert('Invalid Email.');
-	return false;
+	event.preventDefault();
   } else if (!checkActivities ()) {
 	alert('At least one activity must be selected.');
-	return false;
+	event.preventDefault();
   } else if (isCreditCardSelected() && !checkCreditCardNumber ()) {
 	alert('Invalid credit card number.');
-	return false;
+	event.preventDefault();
   } else if (isCreditCardSelected() && !checkCreditCardZip ()) {
 	alert('Invalid Zip Code.');
-	return false;
+	event.preventDefault();
   } else if (isCreditCardSelected() && !checkCreditCardCVV ()) {
 	alert('Invalid CVV.');
-	return false;
+	event.preventDefault();
   } else {
 	alert('Form Submitted!');
-	return true;
   }
 });
